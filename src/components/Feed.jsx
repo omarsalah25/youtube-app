@@ -5,13 +5,15 @@ import { fetchFromAPI } from '../utils/fetchFromApi';
 import { Videos, SideBar } from './';
 
 const Feed = () => {
-  const [selectedCategory, setSelectedCategory] = useState('New');
+  const [selectedCategory, setSelectedCategory] = useState('Home');
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then((data) =>
-      setVideos(data.items)
-    );
+    fetchFromAPI(
+      selectedCategory === 'Home'
+        ? `search?part=snippet&q=`
+        : `search?part=snippet&q=${selectedCategory}`
+    ).then((data) => setVideos(data.items));
   }, [selectedCategory]);
 
   return (
